@@ -13,7 +13,7 @@ pipeline {
                 
                 // Execute Python scripts with Spark
                 sh 'spark-submit main.py'
-                
+                //sh 'spark-submit python_script2.py'
                 
                 // Execute Scala scripts with Spark
                 //sh 'spark-submit --class YourScalaClass1 scala_script1.jar'
@@ -23,10 +23,12 @@ pipeline {
         stage('Test') {
             steps {
                 // Checkout the source code from the GitHub repository for testing
-                git branch: 'test_pipeline', url: 'https://github.com/Asadkardame/BD_Colab.git'
+               git branch: 'test_pipeline', url: 'https://github.com/Asadkardame/BD_Colab.git'
+
+                sh 'spark-submit main.py'
                 
                 // Execute tests for Python scripts
-                sh 'spark-submit main.py'
+                //sh 'pytest python_tests1/'
                 //sh 'pytest python_tests2/'
                 
                 // Execute tests for Scala scripts
@@ -34,14 +36,24 @@ pipeline {
                 //sh 'sbt test2'
             }
         }
+        /*stage('Deploy') {
+            steps {
+                // Checkout the source code from the GitHub repository for deployment
+                git 'https://github.com/yourusername/deploy-repo.git'
+                
+                // Execute deployment scripts or commands
+                sh 'ansible-playbook deploy.yml'
+            }
+        } */
+    }
     
     post {
-        always {
+        /*always {
             // Cleanup steps, such as archiving artifacts
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             // Send notification emails
-            //emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status', to: 'team@example.com'
-        }
+            emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status', to: 'team@example.com'
+        }*/
         success {
             // Actions to take when the pipeline succeeds
             echo 'Pipeline succeeded! Congratulations!'
@@ -51,5 +63,4 @@ pipeline {
             echo 'Pipeline failed! Check the logs for details.'
         }
     }
-}
 }
