@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    
+    triggers {
+        pollSCM('* * * * *') // Polls the SCM (GitHub repository) every minute for changes
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
+                // Checkout the source code from the "diu" branch of the GitHub repository for the build
+                git branch: 'test_pipeline', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                
+                // Execute Python scripts with Spark
+                sh 'spark-submit main.py'
+                
+                
+                // Execute Scala scripts with Spark
+                //sh 'spark-submit --class YourScalaClass1 scala_script1.jar'
+                //sh 'spark-submit --class YourScalaClass2 scala_script2.jar'
+            }
+        }
+        stage('Test') {
+            steps {
+                // Checkout the source code from the GitHub repository for testing
+                git branch: 'test_pipeline', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                
+                // Execute tests for Python scripts
+                sh 'spark-submit main.py'
+                //sh 'pytest python_tests2/'
+                
+                // Execute tests for Scala scripts
+                //sh 'sbt test1'
+                //sh 'sbt test2'
+            }
+        }
+    
+    post {
+        always {
+            // Cleanup steps, such as archiving artifacts
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            // Send notification emails
+            //emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status', to: 'team@example.com'
+        }
+        success {
+            // Actions to take when the pipeline succeeds
+            echo 'Pipeline succeeded! Congratulations!'
+        }
+        failure {
+            // Actions to take when the pipeline fails
+            echo 'Pipeline failed! Check the logs for details.'
+        }
+    }
+}
