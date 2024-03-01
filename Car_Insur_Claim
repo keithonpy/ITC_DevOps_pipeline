@@ -8,16 +8,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Checkout the source code from the "diu" branch of the GitHub repository for the build
-                git branch: 'test_pipeline', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+                git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                 // Execute Python scripts with Spark
                 sh 'spark-submit main.py'
-                //sh 'spark-submit python_script2.py'
-                
-                // Execute Scala scripts with Spark
-                //sh 'spark-submit --class YourScalaClass1 scala_script1.jar'
-                //sh 'spark-submit --class YourScalaClass2 scala_script2.jar'
+               
             }
         }
         stage('Test') {
@@ -25,26 +21,21 @@ pipeline {
                 // Checkout the source code from the GitHub repository for testing
                git branch: 'QA', url: 'https://github.com/Asadkardame/BD_Colab.git'
 
-                sh 'spark-submit main.py'
+                
                 
                 // Execute tests for Python scripts
-                //sh 'pytest python_tests1/'
-                //sh 'pytest python_tests2/'
-                
-                // Execute tests for Scala scripts
-                //sh 'sbt test1'
-                //sh 'sbt test2'
+                sh 'spark-submit main.py''
             }
         }
-        /*stage('Deploy') {
+        stage('Deploy') {
             steps {
                 // Checkout the source code from the GitHub repository for deployment
-                git 'https://github.com/yourusername/deploy-repo.git'
+                git 'https://github.com/Asadkardame/BD_Colab.git'
                 
                 // Execute deployment scripts or commands
-                sh 'ansible-playbook deploy.yml'
+               sh 'spark-submit main.py'
             }
-        } */
+        } 
     }
     
     post {
