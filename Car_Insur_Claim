@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Checkout the source code from the "diu" branch of the GitHub repository for the build
-                git branch: 'test_pipeline', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                git branch: 'developement', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                 // Execute Python scripts with Spark
                 sh 'spark-submit main.py'
