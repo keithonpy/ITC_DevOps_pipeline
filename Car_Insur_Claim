@@ -1,9 +1,9 @@
 pipeline {
     agent any
     
-    triggers {
+    /*triggers {
         pollSCM('* * * * *') // Polls the SCM (GitHub repository) every minute for changes
-    }
+    }*/
     
     stages {
         stage('Build') {
