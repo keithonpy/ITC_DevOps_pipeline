@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Checkout the source code from the GitHub repository for deployment
-                git 'https://github.com/Asadkardame/BD_Colab.git'
+               git branch: 'main', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                 // Execute deployment scripts or commands
                sh 'spark-submit main.py'
