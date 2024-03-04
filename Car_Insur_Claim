@@ -24,7 +24,7 @@ pipeline {
                 
                 
                 // Execute tests for Python scripts
-                sh 'python3 main.py'
+                sh 'spark-submit main.py'
             }
         }
         stage('Deploy') {
