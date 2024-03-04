@@ -44,7 +44,7 @@ pipeline {
             /*// Cleanup steps, such as archiving artifacts
             archiveArtifacts artifacts: 'target/*.jar', fingerprint: true */
             // Send notification emails
-            emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status', to: 'keithtang0901@gmail.com'
+            emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status', to: 'uttam.itcdreamteam@gmail.com'
         }
         success {
             // Actions to take when the pipeline succeeds
