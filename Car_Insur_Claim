@@ -12,7 +12,7 @@ pipeline {
                 git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                 // Execute Python scripts with Spark
-                sh 'python -m main.py'
+                sh 'spark-submit main.py'
                
             }
         }
@@ -24,7 +24,7 @@ pipeline {
                 
                 
                 // Execute tests for Python scripts
-                sh 'spark-submit main.py'
+                sh 'python -m main.py'
             }
         }
         stage('Deploy') {
