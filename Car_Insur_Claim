@@ -12,7 +12,7 @@ pipeline {
                 git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                 // Execute Python scripts with Spark
-                sh 'spark-submit main.py'
+                sh 'python -m main.py'
                
             }
         }
