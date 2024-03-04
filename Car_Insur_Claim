@@ -24,7 +24,7 @@ pipeline {
                 
                 
                 // Execute tests for Python scripts
-                sh 'python -m main.py'
+                sh 'python3 -m main.py'
             }
         }
         stage('Deploy') {
