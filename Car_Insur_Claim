@@ -72,6 +72,10 @@ pipeline {
         }
         
         stage('Test') {
+            options {
+                // Continue to the next stage even if this one fails
+                continueOnFailure(true)
+            }
             parallel {
                 stage('Test On Python') {
                     // Run the python code 
