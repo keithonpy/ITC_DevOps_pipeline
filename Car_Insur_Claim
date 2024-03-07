@@ -7,27 +7,71 @@ pipeline {
     
     stages {
         stage('Build') {
-            steps {
-                // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
+            parallel {
+                stage('Build On Python') {
+                    // Run the python code 
+                    steps {
+                        // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
+                        git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
-                // Execute Python scripts with Spark
-                sh 'spark-submit main.py'
-               
+                        // Execute Python scripts with Spark
+                        sh 'spark-submit main.py'
+                    }
+                stage('Build On Scala') {
+                    // Run the Scala code 
+                    steps {
+                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+                        // git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                
+                        // Execute Python scripts with Spark
+                        sh 'echo scala development'
+                    }
+                }
+                post {
+                    always {
+                         // Send notification emails to development team manager
+                        emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                    }
+                }
+                
+                }
             }
         }
         stage('Test') {
-            steps {
-                // Checkout the source code from the GitHub repository for testing
-               git branch: 'QA', url: 'https://github.com/Asadkardame/BD_Colab.git'
-
+            parallel {
+                stage('Test On Python') {
+                    // Run the python code 
+                    steps {
+                        // Checkout the source code from the GitHub repository for testing
+                       git branch: 'QA', url: 'https://github.com/Asadkardame/BD_Colab.git'
+        
+                        
+                        
+                        // Execute tests for Python scripts
+                        sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py'
+                        sh 'python3 Mock_PostGres.py''
+                    }
+                stage('Test On Scala') {
+                    // Run the Scala code 
+                    steps {
+                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+                        // git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
+                        // Execute Python scripts with Spark
+                        sh 'echo scala testing'
+                    }
+                }
+                post {
+                    always {
+                         // Send notification emails to QA team manager
+                        emailext attachLog: true, body: 'Compile Sucess.', subject: 'Pipeline Status (QA)', to: 'uttam.itcdreamteam@gmail.com'
+                    }
+                }
                 
-                // Execute tests for Python scripts
-                sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py'
-                sh 'python3 Mock_PostGres.py'
+                }
             }
         }
+
         stage('Deploy') {
             steps {
                 // Checkout the source code from the GitHub repository for deployment
@@ -41,8 +85,8 @@ pipeline {
     
     post {
         always {
-            /*// Cleanup steps, such as archiving artifacts
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true */
+            // Cleanup steps, such as archiving artifacts
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true 
             // Send notification emails
             emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status', to: 'uttam.itcdreamteam@gmail.com'
         }
