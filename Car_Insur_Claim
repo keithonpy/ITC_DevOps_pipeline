@@ -40,6 +40,32 @@ pipeline {
                         }
                     }
                 }
+                stage('Build On Kafka') {
+                    // Run the Scala code 
+                    steps {
+                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+                        git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                
+                        // Execute Python scripts with Spark
+                        sh """
+                        mvn package
+                        spark-submit --class com.example.MyMainClass   --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" \
+                        --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-client-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-common-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-protocol-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/hbase-shaded-client-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/htrace-core.jar \
+                        target/my-spark-project-0.1.jar || \
+                        echo 'Build on Kafka failed, Remainder: Activate the API and change the topic numbers'
+                        """
+                    }
+                    post {
+                        always {
+                             // Send notification emails to kafka development team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                    }
+                }
                 
                 
             }
@@ -77,8 +103,34 @@ pipeline {
                     }
                     post {
                         always {
-                             // Send notification emails to python test team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
+                             // Send notification emails to scala test team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                    }
+                }
+                stage('Test On Kafka') {
+                    // Run the Scala code 
+                    steps {
+                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+                        // git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                
+                        // Execute Python scripts with Spark
+                        sh """
+                        mvn package
+                        spark-submit --class com.example.MyMainClass   --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" \
+                        --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-client-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-common-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-protocol-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/hbase-shaded-client-2.2.3.7.1.7.0-551.jar,\
+                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/htrace-core.jar \
+                        target/my-spark-project-0.1.jar || \
+                        echo 'Test on Kafka failed, Remainder: Activate the API and change the topic numbers'
+                        """
+                    }
+                    post {
+                        always {
+                             // Send notification emails to kafka development team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
