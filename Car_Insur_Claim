@@ -17,6 +17,12 @@ pipeline {
                         // Execute Python scripts with Spark
                         sh 'spark-submit main.py'
                     }
+                    post {
+                        always {
+                             // Send notification emails to python development team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                    }
                 }
                 stage('Build On Scala') {
                     // Run the Scala code 
@@ -27,13 +33,14 @@ pipeline {
                         // Execute Python scripts with Spark
                         sh 'echo scala development'
                     }
-                }
-                post {
-                    always {
-                         // Send notification emails to development team manager
-                        emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                    post {
+                        always {
+                             // Send notification emails to scala development team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
                     }
                 }
+                
                 
             }
         }
@@ -52,6 +59,12 @@ pipeline {
                         sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py'
                         sh 'python3 Mock_PostGres.py'
                     }
+                    post {
+                        always {
+                             // Send notification emails to python test team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                    }
                 }
                 stage('Test On Scala') {
                     // Run the Scala code 
@@ -62,11 +75,11 @@ pipeline {
                         // Execute Python scripts with Spark
                         sh 'echo scala testing'
                     }
-                }
-                post {
-                    always {
-                         // Send notification emails to QA team manager
-                        emailext attachLog: true, body: 'Compile Sucess.', subject: 'Pipeline Status (QA)', to: 'uttam.itcdreamteam@gmail.com'
+                    post {
+                        always {
+                             // Send notification emails to python test team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
                     }
                 }
                 
