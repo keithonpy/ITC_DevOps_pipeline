@@ -139,7 +139,7 @@ pipeline {
                     post {
                         always {
                              // Send notification emails to kafka development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
