@@ -15,8 +15,10 @@ pipeline {
                         git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                         // Execute Python scripts with Spark
-
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh 'spark-submit main.py'
+                        }
+                        
                     }
                     post {
                         always {
@@ -32,7 +34,10 @@ pipeline {
                         // git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                         // Execute Python scripts with Spark
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh 'echo scala development'
+                        }
+                        
                     }
                     post {
                         always {
@@ -86,8 +91,13 @@ pipeline {
                         
                         
                         // Execute tests for Python scripts
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py'
                         sh 'python3 Mock_PostGres.py'
+                        }
+
+
+                        
                     }
                     post {
                         always {
@@ -102,8 +112,11 @@ pipeline {
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
                         // git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
-                        // Execute Python scripts with Spark
+                        // Execute Scala scripts with Spark
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh 'echo scala testing'
+                        }
+                        
                     }
                     post {
                         always {
@@ -119,7 +132,9 @@ pipeline {
                         // git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
                 
                         // Execute kafa scripts with Spark
-                        echo 'Test for kafka'
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh 'echo kafka testing'
+                        }
                     }
                     post {
                         always {
