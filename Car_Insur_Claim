@@ -18,9 +18,10 @@ pipeline {
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
                         git branch: 'Dev_Python', url: 'https://github.com/Asadkardame/BD_Colab.git'
 
-                        // Run the python code    
-                        //sh 'spark-submit main.py'
+                        // Run the python code
                         sh 'echo python development'
+                        sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
+                        
                         }
                         
                     }
