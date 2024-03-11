@@ -24,7 +24,7 @@ pipeline {
                 
                 // Run the python code
                 //sh 'echo python development'
-                sh 'spark-submit incrementalLoad.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar'
+                sh 'spark-submit --master local[*] --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hive/lib/postgresql-42.2.14.jar incrementalLoad.py '
                 
                 }
                 
