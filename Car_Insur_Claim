@@ -17,8 +17,12 @@ pipeline {
                         // Execute Python scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
-                        git branch: 'Dev_Python', url: 'https://github.com/Asadkardame/BD_Colab.git'
-
+                        script {
+                            // Switch to the 'branch_1' branch for Stage 1
+                            checkout([$class: 'GitSCM', branches: [[name: 'Dev_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            // Add your stage-specific steps here
+                        }
+                        
                         // Run the python code
                         sh 'echo python development'
                         sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
@@ -42,8 +46,12 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        // 
-                        git branch: 'ScalaSparkJar', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                        script {
+                            // Switch to the 'branch_1' branch for Stage 1
+                            checkout([$class: 'GitSCM', branches: [[name: 'ScalaSparkJar']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            // Add your stage-specific steps here
+                        } 
+                        
 
                         // Execute scala scripts
                         sh 'echo scala development'
@@ -105,7 +113,13 @@ pipeline {
                         // Execute tests for Python scripts
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the GitHub repository for testing
-                        git branch: 'QA_Python', url: 'https://github.com/Asadkardame/BD_Colab.git'
+
+                        script {
+                            // Switch to the 'branch_1' branch for Stage 1
+                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            // Add your stage-specific steps here
+                        } 
+                        
                         sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar /var/lib/jenkins/workspace/car_damage_insur_pipeline/main.py'
                         sh 'python3 Mock_PostGres.py'
                         }
