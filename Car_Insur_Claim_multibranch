@@ -185,11 +185,7 @@ pipeline {
                 sh """
                 mvn package
                 spark-submit --class scalatest.KafkaTest   --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" \
-                --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-client-2.2.3.7.1.7.0-551.jar,\
-                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-common-2.2.3.7.1.7.0-551.jar,\
-                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-protocol-2.2.3.7.1.7.0-551.jar,\
-                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/hbase-shaded-client-2.2.3.7.1.7.0-551.jar,\
-                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/htrace-core.jar \
+               --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-client-2.2.3.7.1.7.0-551.jar,/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-common-2.2.3.7.1.7.0-551.jar,/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-protocol-2.2.3.7.1.7.0-551.jar,/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/hbase-shaded-client-2.2.3.7.1.7.0-551.jar,/opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/htrace-core.jar \
                 target/my-spark-project-1.0.jar || echo 'Build on Kafka failed, Remainder: Activate the API and change the topic numbers'
                 """
                 }
