@@ -18,7 +18,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
                         script {
-                            // Switch to the 'branch_1' branch for Stage 1
+                            // Switch to the 'Dev_Python' branch for Stage "Build On Python"
                             checkout([$class: 'GitSCM', branches: [[name: 'Dev_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
                             // Add your stage-specific steps here
                         }
@@ -47,14 +47,16 @@ pipeline {
 
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
                         script {
-                            // Switch to the 'branch_1' branch for Stage 1
+                            // Switch to the 'ScalaSparkJar' branch for Stage "Build On Scala"
                             checkout([$class: 'GitSCM', branches: [[name: 'ScalaSparkJar']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
                             // Add your stage-specific steps here
                         } 
                         
 
                         // Execute scala scripts
-                        sh 'echo scala development'
+                        sh """
+                            echo scala development
+                            """
                         }
                         
                     }
@@ -73,7 +75,13 @@ pipeline {
                         // Execute Python scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
+
+                        script {
+                            // Switch to the 'pipeline_api_kafka_hbase' branch for Stage "Build On Scala"
+                            checkout([$class: 'GitSCM', branches: [[name: 'pipeline_api_kafka_hbase']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            // Add your stage-specific steps here
+                        } 
+                        
 
 
                         sh """
@@ -115,7 +123,7 @@ pipeline {
                         // Checkout the source code from the GitHub repository for testing
 
                         script {
-                            // Switch to the 'branch_1' branch for Stage 1
+                            // Switch to the 'QA_Python' branch for Stage Test On Python
                             checkout([$class: 'GitSCM', branches: [[name: 'QA_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
                             // Add your stage-specific steps here
                         } 
@@ -142,8 +150,12 @@ pipeline {
                         // Execute Scala scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        git branch: 'QA_Scala', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                         script {
+                            // Switch to the 'QA_Python' branch for Stage Test On Python
+                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            // Add your stage-specific steps here
+                        } 
+                    
                             
                         sh '''
                             mvn package
@@ -167,6 +179,11 @@ pipeline {
                         // Execute kafa scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the 'pipeline_api_kafka_hbase' branch of the GitHub repository for the build
+                        script {
+                            // Switch to the 'QA_Python' branch for Stage Test On Python
+                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            // Add your stage-specific steps here
+                        } 
                         // git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
                         sh 'echo kafka testing'
                         }
