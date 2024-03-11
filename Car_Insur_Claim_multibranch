@@ -123,7 +123,7 @@ pipeline {
                     // Add your stage-specific steps here
                 } 
                 
-                sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar'
+                sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py'
                 sh 'python3 Mock_PostGres.py'
                 }
 
