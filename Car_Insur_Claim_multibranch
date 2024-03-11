@@ -16,11 +16,11 @@ pipeline {
                 // Execute Python scripts with Spark
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
-                /*script {
+                script {
                     // Switch to the 'Dev_Python' branch for Stage "Build On Python"
                     checkout([$class: 'GitSCM', branches: [[name: 'Dev_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
                     // Add your stage-specific steps here
-                }*/
+                }
                 
                 // Run the python code
                 //sh 'echo python development'
