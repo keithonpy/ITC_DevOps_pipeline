@@ -16,10 +16,11 @@ pipeline {
                         // Execute Python scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
-                        git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                        git branch: 'Dev_Python', url: 'https://github.com/Asadkardame/BD_Colab.git'
 
                         // Run the python code    
-                        sh 'spark-submit main.py'
+                        //sh 'spark-submit main.py'
+                        sh 'echo python development'
                         }
                         
                     }
@@ -39,7 +40,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        // git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                        // git branch: 'Dev_Scala', url: 'https://github.com/Asadkardame/BD_Colab.git'
                         
 
                         // Execute scala scripts
@@ -102,7 +103,7 @@ pipeline {
                         // Execute tests for Python scripts
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the GitHub repository for testing
-                        git branch: 'QA', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                        git branch: 'QA_Python', url: 'https://github.com/Asadkardame/BD_Colab.git'
                         sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py'
                         sh 'python3 Mock_PostGres.py'
                         }
@@ -126,7 +127,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        // git branch: 'Development', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                        git branch: 'QA_Scala', url: 'https://github.com/Asadkardame/BD_Colab.git'
                             
                         sh 'echo scala testing'
                         }
