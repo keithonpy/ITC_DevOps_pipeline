@@ -6,196 +6,196 @@ pipeline {
     }*/
     
     stages {
-        stage('Build') {
-                stage('Build On Python') {
-                    
-                    steps {
+        
+        stage('Build On Python') {
+            
+            steps {
 
-                        
                 
-                        // Execute Python scripts with Spark
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
-                        /*script {
-                            // Switch to the 'Dev_Python' branch for Stage "Build On Python"
-                            checkout([$class: 'GitSCM', branches: [[name: 'Dev_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        }*/
-                        
-                        // Run the python code
-                        sh 'echo python development'
-                        //sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
-                        
-                        }
-                        
-                    }
-                    post {
-                        always {
-                             // Send notification emails to python development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python Dev)', to: 'uttam.itcdreamteam@gmail.com'
-                        }
-                    }
-                }
-                stage('Build On Scala') {
-                    // Run the Scala code 
-                    steps {
-                        
-                        
-                        
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-
-                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        script {
-                            // Switch to the 'ScalaSparkJar' branch for Stage "Build On Scala"
-                            checkout([$class: 'GitSCM', branches: [[name: 'ScalaSparkJar']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
-                        
-
-                        // Execute scala scripts
-                        sh """
-                            echo scala development
-                            """
-                        }
-                        
-                    }
-                    post {
-                        always {
-                             // Send notification emails to scala development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala Dev)', to: 'uttam.itcdreamteam@gmail.com'
-                        }
-                    }
-                }
-                stage('Build On Kafka') {
-                    // Run the Scala code 
-                    steps {
-                        
+        
+                // Execute Python scripts with Spark
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
+                /*script {
+                    // Switch to the 'Dev_Python' branch for Stage "Build On Python"
+                    checkout([$class: 'GitSCM', branches: [[name: 'Dev_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                    // Add your stage-specific steps here
+                }*/
                 
-                        // Execute Python scripts with Spark
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-
-                        script {
-                            // Switch to the 'pipeline_api_kafka_hbase' branch for Stage "Build On Scala"
-                            checkout([$class: 'GitSCM', branches: [[name: 'pipeline_api_kafka_hbase']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
-                        
-
-
-                        sh """
-                        mvn package
-                        spark-submit --class com.example.MyMainClass   --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" \
-                        --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-client-2.2.3.7.1.7.0-551.jar,\
-                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-common-2.2.3.7.1.7.0-551.jar,\
-                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-protocol-2.2.3.7.1.7.0-551.jar,\
-                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/hbase-shaded-client-2.2.3.7.1.7.0-551.jar,\
-                        /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/htrace-core.jar \
-                        target/my-spark-project-0.1.jar || echo 'Build on Kafka failed, Remainder: Activate the API and change the topic numbers'
-                        """
-                        }
-                        
-                    }
-                    post {
-                        always {
-                             // Send notification emails to kafka development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
-                        }
-                    }
+                // Run the python code
+                sh 'echo python development'
+                //sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
+                
                 }
+                
+            }
+            post {
+                always {
+                     // Send notification emails to python development team manager
+                    emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                }
+            }
+        }
+        stage('Build On Scala') {
+            // Run the Scala code 
+            steps {
+                
+                
+                
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+
+                // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+                script {
+                    // Switch to the 'ScalaSparkJar' branch for Stage "Build On Scala"
+                    checkout([$class: 'GitSCM', branches: [[name: 'ScalaSparkJar']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                    // Add your stage-specific steps here
+                } 
+                
+
+                // Execute scala scripts
+                sh """
+                    echo scala development
+                    """
+                }
+                
+            }
+            post {
+                always {
+                     // Send notification emails to scala development team manager
+                    emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                }
+            }
+        }
+        stage('Build On Kafka') {
+            // Run the Scala code 
+            steps {
+                
+        
+                // Execute Python scripts with Spark
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
+
+                script {
+                    // Switch to the 'pipeline_api_kafka_hbase' branch for Stage "Build On Scala"
+                    checkout([$class: 'GitSCM', branches: [[name: 'pipeline_api_kafka_hbase']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                    // Add your stage-specific steps here
+                } 
+                
+
+
+                sh """
+                mvn package
+                spark-submit --class com.example.MyMainClass   --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.7","com.lihaoyi:requests_2.11:0.7.1" \
+                --jars /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-client-2.2.3.7.1.7.0-551.jar,\
+                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-common-2.2.3.7.1.7.0-551.jar,\
+                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/hbase-protocol-2.2.3.7.1.7.0-551.jar,\
+                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/jars/hbase-shaded-client-2.2.3.7.1.7.0-551.jar,\
+                /opt/cloudera/parcels/CDH-7.1.7-1.cdh7.1.7.p0.15945976/lib/hbase/lib/htrace-core.jar \
+                target/my-spark-project-0.1.jar || echo 'Build on Kafka failed, Remainder: Activate the API and change the topic numbers'
+                """
+                }
+                
+            }
+            post {
+                always {
+                     // Send notification emails to kafka development team manager
+                    emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                }
+            }
+        }
                 
                 
             
+        
+        
+        
+        stage('Test On Python') {
+            // Run the python code 
+            steps {
+                
+
+                
+                
+                // Execute tests for Python scripts
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                // Checkout the source code from the GitHub repository for testing
+
+                script {
+                    // Switch to the 'QA_Python' branch for Stage Test On Python
+                    checkout([$class: 'GitSCM', branches: [[name: 'QA_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                    // Add your stage-specific steps here
+                } 
+                
+                sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar /var/lib/jenkins/workspace/car_damage_insur_pipeline/main.py'
+                sh 'python3 Mock_PostGres.py'
+                }
+
+
+                
+            }
+            post {
+                always {
+                     // Send notification emails to python test team manager
+                    emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
+                }
+            }
         }
-        
-        stage('Test') {
-                stage('Test On Python') {
-                    // Run the python code 
-                    steps {
-                        
-        
-                        
-                        
-                        // Execute tests for Python scripts
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Checkout the source code from the GitHub repository for testing
-
-                        script {
-                            // Switch to the 'QA_Python' branch for Stage Test On Python
-                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
-                        
-                        sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar /var/lib/jenkins/workspace/car_damage_insur_pipeline/main.py'
-                        sh 'python3 Mock_PostGres.py'
-                        }
-
-
-                        
-                    }
-                    post {
-                        always {
-                             // Send notification emails to python test team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
-                        }
-                    }
-                }
-                stage('Test On Scala') {
-                    // Run the Scala code 
-                    steps {
-                        
+        stage('Test On Scala') {
+            // Run the Scala code 
+            steps {
                 
-                        // Execute Scala scripts with Spark
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        
+                // Execute Scala scripts with Spark
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-                         script {
-                            // Switch to the 'QA_Python' branch for Stage Test On Python
-                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
+                 script {
+                    // Switch to the 'QA_Python' branch for Stage Test On Python
+                    checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                    // Add your stage-specific steps here
+                } 
+            
                     
-                            
-                        sh '''
-                            mvn package
-                            spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scalatest.FullLoadTest target/FullLoadTest-1.0.jar
-                            '''
-                        }
-                        
-                    }
-                    post {
-                        always {
-                             // Send notification emails to scala test team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala QA)', to: 'uttam.itcdreamteam@gmail.com'
-                        }
-                    }
+                sh '''
+                    mvn package
+                    spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scalatest.FullLoadTest target/FullLoadTest-1.0.jar
+                    '''
                 }
-                stage('Test On Kafka') {
-                    // Run the Scala code 
-                    steps {
-                        
                 
-                        // Execute kafa scripts with Spark
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Checkout the source code from the 'pipeline_api_kafka_hbase' branch of the GitHub repository for the build
-                        script {
-                            // Switch to the 'QA_Python' branch for Stage Test On Python
-                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
-                        // git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
-                        sh 'echo kafka testing'
-                        }
-                    }
-                    post {
-                        always {
-                             // Send notification emails to kafka development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
-                        }
-                    }
+            }
+            post {
+                always {
+                     // Send notification emails to scala test team manager
+                    emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala QA)', to: 'uttam.itcdreamteam@gmail.com'
                 }
+            }
+        }
+        stage('Test On Kafka') {
+            // Run the Scala code 
+            steps {
+                
+        
+                // Execute kafa scripts with Spark
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                // Checkout the source code from the 'pipeline_api_kafka_hbase' branch of the GitHub repository for the build
+                script {
+                    // Switch to the 'QA_Python' branch for Stage Test On Python
+                    checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                    // Add your stage-specific steps here
+                } 
+                // git branch: 'pipeline_api_kafka_hbase', url: 'https://github.com/Asadkardame/BD_Colab.git'
+                sh 'echo kafka testing'
+                }
+            }
+            post {
+                always {
+                     // Send notification emails to kafka development team manager
+                    emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
+                }
+            }
+        }
                 
             
-        }
+        
         
 
         stage('Deploy') {
