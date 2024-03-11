@@ -104,7 +104,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the GitHub repository for testing
                         git branch: 'QA_Python', url: 'https://github.com/Asadkardame/BD_Colab.git'
-                        sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar  ./main.py'
+                        sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar /var/lib/jenkins/workspace/car_damage_insur_pipeline/main.py'
                         sh 'python3 Mock_PostGres.py'
                         }
 
