@@ -7,11 +7,7 @@ pipeline {
     
     stages {
         stage('Build') {
-            parallel {
                 stage('Build On Python') {
-					when {
-                        branch 'Dev_Python'
-                    }
                     
                     steps {
 
@@ -42,9 +38,6 @@ pipeline {
                 }
                 stage('Build On Scala') {
                     // Run the Scala code 
-					when {
-                        branch 'ScalaSparkJar'
-                    }
                     steps {
                         
                         
@@ -61,10 +54,7 @@ pipeline {
 
                         // Execute scala scripts
                         sh """
-                            cd ScalaSparkIngestion
-							mvn package
-							spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scala_spark.LoadFirst target/ScalaSparkIngestion-1.0-SNAPSHOT.jar
-
+                            echo scala development
                             """
                         }
                         
@@ -77,10 +67,7 @@ pipeline {
                     }
                 }
                 stage('Build On Kafka') {
-                    // Run the Scala code
-					when {
-                        branch 'pipeline_api_kafka_hbase'
-                    }
+                    // Run the Scala code 
                     steps {
                         
                 
@@ -118,11 +105,10 @@ pipeline {
                 }
                 
                 
-            }
+            
         }
         
         stage('Test') {
-            parallel {
                 stage('Test On Python') {
                     // Run the python code 
                     steps {
@@ -208,7 +194,7 @@ pipeline {
                     }
                 }
                 
-            }
+            
         }
         
 
