@@ -214,13 +214,13 @@ pipeline {
         stage('Transformation and Machine Learning') {
             steps {
                 // Checkout the source code from the GitHub repository for Machine Learning
-               git branch: 'TransformML', url: 'https://github.com/Asadkardame/BD_Colab.git'
+               //git branch: 'TransformML', url: 'https://github.com/Asadkardame/BD_Colab.git'
 
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         
                 // Execute machine learning scripts or commands
-               sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar SparkMachineLearningLibrary.py'
-
+               //sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar SparkMachineLearningLibrary.py'
+                sh 'echo 'Transformation and Machine Learning''
                        
                 }
                 
