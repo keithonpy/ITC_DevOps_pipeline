@@ -23,12 +23,11 @@ pipeline {
                             spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar 
                             '''
                         
-                        /* 
-                        // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
-                        /*script {
+                        /* // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
+                        script {
                             checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git']]])
                         
-                        }*/
+                        }
 
                         sh 'git clone https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git'
                         sh 'cd ITC_Prj_Car_Insur_PySpark'
@@ -36,8 +35,7 @@ pipeline {
                         // Run the python code
                        // sh 'echo python development'
                         sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
-                        sh 'cd ../'
-                        */
+                        sh 'cd ../' */
                         }
                         
                     }
