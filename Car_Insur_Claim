@@ -162,17 +162,16 @@ pipeline {
                         // Execute Scala scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-                         script {
-                            // Switch to the 'QA_Python' branch for Stage Test On Python
-                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Scala']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
-                    
-                            
-                        sh '''
+                        sh '''mkdir -p QA_Python
+                            cd QA_Scala
+                            rm -rf BD_Colab
+                            git clone -b QA_Scala https://github.com/Asadkardame/BD_Colab.git
+                            cd BD_Colab
                             mvn package
                             spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scalatest.FullLoadTest target/FullLoadTest-1.0.jar
                             '''
+                    
+
                         }
                         
                     }
