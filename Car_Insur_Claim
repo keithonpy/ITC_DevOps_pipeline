@@ -19,10 +19,13 @@ pipeline {
                         sh 'mkdir -p Dev_Python'
                         sh 'cd Dev_Python'
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
-                        script {
+                        /*script {
                             checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git']]])
                         
-                        }
+                        }*/
+
+                        sh 'git clone https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git'
+                        sh 'cd ITC_Prj_Car_Insur_PySpark'
                         
                         // Run the python code
                        // sh 'echo python development'
