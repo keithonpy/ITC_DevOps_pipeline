@@ -132,14 +132,16 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Checkout the source code from the GitHub repository for testing
 
-                        script {
-                            // Switch to the 'QA_Python' branch for Stage Test On Python
-                            checkout([$class: 'GitSCM', branches: [[name: 'QA_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
-                        
-                        sh 'spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar /var/lib/jenkins/workspace/car_damage_insur_pipeline/main.py'
-                        sh 'python3 Mock_PostGres.py'
+
+                        sh '''mkdir -p QA_Python
+                            cd QA_Python
+                            rm -rf BD_Colab
+                            git clone -b QA_Python https://github.com/Asadkardame/BD_Colab.git
+                            cd BD_Colab
+                            spark-submit --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar main.py
+                            python3 Mock_PostGres.py
+                            '''
+
                         }
 
 
