@@ -18,10 +18,10 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh '''mkdir -p Dev_Python
                             cd Dev_Python
-                            rm -rf ITC_Prj_Car_Insur_PySpark
-                            git clone https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git
-                            cd ITC_Prj_Car_Insur_PySpark
-                            spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar 
+                            rm -rf BD_Colab
+                            git clone -b Dev_Python https://github.com/Asadkardame/BD_Colab.git
+                            cd BD_Colab
+                            spark-submit incrementalLoad.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar 
                             '''
                         
                         /* // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
@@ -55,18 +55,21 @@ pipeline {
                         
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
-                        // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
-                        script {
-                            // Switch to the 'ScalaSparkJar' branch for Stage "Build On Scala"
-                            checkout([$class: 'GitSCM', branches: [[name: 'ScalaSparkJar']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
-                            // Add your stage-specific steps here
-                        } 
+                       
                         
 
                         // Execute scala scripts
-                        sh """
-                            echo scala development
-                            """
+
+                        sh '''mkdir -p Dev_Scala
+                            cd Dev_Scala
+                            rm -rf BD_Colab
+                            git clone -b ScalaSparkJar https://github.com/Asadkardame/BD_Colab.git
+                            cd BD_Colab/ScalaSparkIngestion
+                            mvn package
+                            spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scala_spark.IncrementalLoad target/ScalaSparkIngestion-1.0-SNAPSHOT.jar
+
+                            '''
+                        
                         }
                         
                     }
