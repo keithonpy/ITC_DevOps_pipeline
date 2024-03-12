@@ -18,6 +18,7 @@ pipeline {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh '''mkdir -p Dev_Python
                             cd Dev_Python
+                            rm -rf ITC_Prj_Car_Insur_PySpark
                             git clone https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git
                             cd ITC_Prj_Car_Insur_PySpark
                             spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar 
