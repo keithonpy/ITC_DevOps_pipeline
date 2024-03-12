@@ -19,13 +19,13 @@ pipeline {
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
                         /*script {
                             // Switch to the 'Dev_Python' branch for Stage "Build On Python"
-                            checkout([$class: 'GitSCM', branches: [[name: 'Dev_Python']], userRemoteConfigs: [[url: 'https://github.com/Asadkardame/BD_Colab.git']]])
+                            checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git']]])
                             // Add your stage-specific steps here
                         }*/
                         
                         // Run the python code
-                        sh 'echo python development'
-                        //sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
+                       // sh 'echo python development'
+                        sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
                         
                         }
                         
