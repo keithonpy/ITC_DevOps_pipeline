@@ -16,6 +16,8 @@ pipeline {
                 
                         // Execute Python scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh 'mkdir -p Dev_Python'
+                        sh 'cd Dev_Python'
                         // Checkout the source code from the "Python Developement" branch of the GitHub repository for the build
                         script {
                             checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/keithonpy/ITC_Prj_Car_Insur_PySpark.git']]])
@@ -25,7 +27,7 @@ pipeline {
                         // Run the python code
                        // sh 'echo python development'
                         sh 'spark-submit main.py --master local[*] --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar '
-                        
+                        sh 'cd ../'
                         }
                         
                     }
@@ -73,6 +75,9 @@ pipeline {
                 
                         // Execute Python scripts with Spark
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+
+                        sh 'mkdir -p Dev_Kafka'
+                        sh 'cd Dev_Kafka'
                         // Checkout the source code from the "test_pipeline" branch of the GitHub repository for the build
 
                         script {
@@ -94,6 +99,7 @@ pipeline {
                         target/my-spark-project-0.1.jar || echo 'Build on Kafka failed, Remainder: Activate the API and change the topic numbers'
                         """
                         }
+                        sh 'cd ../'
                         
                     }
                     post {
