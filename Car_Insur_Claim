@@ -54,7 +54,7 @@ pipeline {
                             git clone -b ScalaSparkJar https://github.com/Asadkardame/BD_Colab.git
                             cd BD_Colab/ScalaSparkIngestion
                             mvn package
-                            spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scala_spark.IncrementalLoad target/ScalaSparkIngestion-1.0-SNAPSHOT.jar
+                            spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scala_spark.LoadFirst target/ScalaSparkIngestion-1.0-SNAPSHOT.jar
 
                             '''
                         
