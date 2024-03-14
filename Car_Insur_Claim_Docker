@@ -25,7 +25,7 @@ pipeline {
                         
                     }
                     post {
-                        suceess {
+                        success {
                              // Send notification emails to python development team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
@@ -54,7 +54,7 @@ pipeline {
                         
                     }
                     post {
-                        suceess {
+                        success {
                              // Send notification emails to scala development team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
@@ -82,7 +82,7 @@ pipeline {
                         }
                     }
                     post {
-                        suceess {
+                        success {
                              // Send notification emails to Kafka development team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
@@ -120,7 +120,7 @@ pipeline {
                         
                     }
                     post {
-                        suceess {
+                        success {
                              // Send notification emails to python QA team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
@@ -150,7 +150,7 @@ pipeline {
                         
                     }
                     post {
-                        suceess {
+                        success {
                              // Send notification emails to scala QA team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
@@ -190,7 +190,7 @@ pipeline {
                         }
                     }
                     post {
-                        suceess {
+                        success {
                              // Send notification emails to Kafka QA team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
@@ -220,7 +220,7 @@ pipeline {
                 
             }
             post {
-                    suceess {
+                    success {
                             // Send notification emails to ML team manager
                         emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (ML)', to: 'uttam.itcdreamteam@gmail.com'
                     }
