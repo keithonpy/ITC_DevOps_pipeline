@@ -19,7 +19,7 @@ pipeline {
                             rm -rf BD_Colab
                             git clone -b Dev_Python https://github.com/Asadkardame/BD_Colab.git
                             
-                            docker build -t incrementalLoad python/ 
+                            docker build -t incrementalload4py BD_Colab/ 
                             '''
                         }
                         
