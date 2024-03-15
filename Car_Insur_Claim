@@ -28,10 +28,14 @@ pipeline {
                         }
                         
                     }
-                    post {
-                        always {
+                     post {
+                        success {
                              // Send notification emails to python development team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                        failure {
+                             // Send notification emails to python development team manager
+                            emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (Python Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
@@ -51,10 +55,9 @@ pipeline {
                         sh '''mkdir -p Dev_Scala
                             cd Dev_Scala
                             rm -rf BD_Colab
-                            git clone -b ScalaSparkJar https://github.com/Asadkardame/BD_Colab.git
-                            cd BD_Colab/ScalaSparkIngestion
+                            git clone -b Dev_Scala https://github.com/Asadkardame/BD_Colab.git
                             mvn package
-                            spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scala_spark.LoadFirst target/ScalaSparkIngestion-1.0-SNAPSHOT.jar
+                            spark-submit --master local --jars /var/lib/jenkins/workspace/nagaranipysparkdryrun/lib/postgresql-42.5.3.jar --class scala_spark.IncrementalLoad target/ScalaSparkIngestion-1.0.jar
 
                             '''
                         
@@ -62,9 +65,13 @@ pipeline {
                         
                     }
                     post {
-                        always {
+                        success {
                              // Send notification emails to scala development team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                        failure {
+                             // Send notification emails to scala development team manager
+                            emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (Scala Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
@@ -96,9 +103,13 @@ pipeline {
                         
                     }
                     post {
-                        always {
-                             // Send notification emails to kafka development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        success {
+                             // Send notification emails to Kafka development team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                        failure {
+                             // Send notification emails to Kafka development team manager
+                            emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (Kafka Dev)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
@@ -136,9 +147,13 @@ pipeline {
                         
                     }
                     post {
-                        always {
-                             // Send notification emails to python test team manager
+                        success {
+                             // Send notification emails to python QA team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                        failure {
+                             // Send notification emails to python QA team manager
+                            emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (Python QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
@@ -164,9 +179,13 @@ pipeline {
                         
                     }
                     post {
-                        always {
-                             // Send notification emails to scala test team manager
+                        success {
+                             // Send notification emails to scala QA team manager
                             emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Scala QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                        failure {
+                             // Send notification emails to scala QA team manager
+                            emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (Scala QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
@@ -200,9 +219,13 @@ pipeline {
                         }
                     }
                     post {
-                        always {
-                             // Send notification emails to kafka development team manager
-                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        success {
+                             // Send notification emails to Kafka QA team manager
+                            emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (Kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
+                        }
+                        failure {
+                             // Send notification emails to Kafka QA team manager
+                            emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (Kafka QA)', to: 'uttam.itcdreamteam@gmail.com'
                         }
                     }
                 }
@@ -225,6 +248,16 @@ pipeline {
                 }
                 
             }
+            post {
+                    success {
+                            // Send notification emails to ML team manager
+                        emailext attachLog: true, body: 'Compile Success.', subject: 'Pipeline Status (ML)', to: 'uttam.itcdreamteam@gmail.com'
+                    }
+                    failure {
+                            // Send notification emails to ML team manager
+                        emailext attachLog: true, body: 'Compile Failed.', subject: 'Pipeline Status (ML)', to: 'uttam.itcdreamteam@gmail.com'
+                    }
+            }
         } 
 
         stage('Deploy') {
@@ -239,19 +272,15 @@ pipeline {
     }
     
     post {
-        always {
-            /*// Cleanup steps, such as archiving artifacts
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true */
-            // Send notification emails
-            emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status (Deployment)', to: 'uttam.itcdreamteam@gmail.com'
-        }
         success {
             // Actions to take when the pipeline succeeds
             echo 'Pipeline succeeded! Congratulations!'
+            emailext attachLog: true, body: 'The Jenkins pipeline has completed.', subject: 'Pipeline Status (Deployment)', to: 'uttam.itcdreamteam@gmail.com'
         }
         failure {
             // Actions to take when the pipeline fails
             echo 'Pipeline failed! Check the logs for details.'
+            emailext attachLog: true, body: 'The Jenkins pipeline has failed.', subject: 'Pipeline Status (Deployment)', to: 'uttam.itcdreamteam@gmail.com'
         }
     }
 }
