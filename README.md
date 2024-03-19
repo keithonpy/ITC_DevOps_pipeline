@@ -39,4 +39,6 @@ Jenkins is an open source automation tools written in java with plugins built fo
 2. Jenkins pipeline
 
 
-## Shortcoming of JEnkins
+## Jenkins distributed architecture
+
+![alt text](https://github.com/keithonpy/ITC_DevOps_pipeline/blob/main/chart/master-slave.jpg)
