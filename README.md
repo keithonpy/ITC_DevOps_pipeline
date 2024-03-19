@@ -43,4 +43,6 @@ Jenkins is an open source automation tools written in java with plugins built fo
 
 ## Jenkins distributed architecture
 
+Jenkins is in a master-slave architecture. Jenkins slaves are generally required to provide the desired environment. 
+
 ![alt text](https://github.com/keithonpy/ITC_DevOps_pipeline/blob/main/chart/master-slave.jpg)
