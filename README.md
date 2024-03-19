@@ -4,20 +4,14 @@
 
 | Waterfall model  | Agile model|
 | ------------- | ------------- |
-| Content Cell  | Deliver software well-tailored to an ever-growing understanding of customer demands  |
-| Content Cell  | Software is deployed more quickly and improved more regularly  |
-||Better code hygiene including style, readability, and structuring|
-||Flexible and adaptable process enables pivots or changes mid-project|
+| Supports all planning to be completed up front with a clear roadmap for every stage of the project  | Deliver software well-tailored to an ever-growing understanding of customer demands  |
+| Utilizes a clear, structured approach | Software is deployed more quickly and improved more regularly  |
+| Easy to track progress, identify risks, and manage project budgets|Better code hygiene including style, readability, and structuring|
+| Project manager holds significant authority over the project, plan, and value delivery|Flexible and adaptable process enables pivots or changes mid-project|
+||Doesn’t require a complete list of requirements upfront|
+||Makes room to act on organizational learning as the project progresses|
+||Transparency and continuous communication with involved stakeholders|
 
-
-Advantages of Agile Methodology
-* 
-* 
-* 
-* 
-* Doesn’t require a complete list of requirements upfront
-* Makes room to act on organizational learning as the project progresses
-* Transparency and continuous communication with involved stakeholders
 
 ## Limitations of Agile model
 
