@@ -16,10 +16,10 @@
 ## Limitations of Agile model
 
 * Development team wants to change VS Operation team wants to be stable
-* 
+* That's why the DevOps comes
 
 ## DevOps Stages in big data
-
+DevOps is a methodology instead of technology​. It helps to build, evolve and operate a rapidly changing systems at scale​
 ![alt text](https://github.com/keithonpy/ITC_DevOps_pipeline/blob/main/chart/stages.png)
 1. Version Control - maintain different version of the code
 2. Continuous integration - compile, validate, code review, unit testing, integration testing
