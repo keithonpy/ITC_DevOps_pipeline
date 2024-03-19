@@ -1,5 +1,15 @@
-# ITC_DevOps_pipeline
+# Introduction to DevOps
 
-This repository contains the DevOps pipeline used in Jenkins for projects at ITC as below:
+## Waterfall model VS Agile model 
 
+
+## Limitation of Agile model
+
+
+
+## DevOps Stages
+1. Version Control
+2. Continuous integration
+3. Continuous Delivery
+4. Deployment
 * Car Insurance Claim
