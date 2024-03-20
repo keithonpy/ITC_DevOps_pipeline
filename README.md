@@ -26,9 +26,10 @@ DevOps is a methodology instead of technology​. It helps to build, evolve and 
 
 ![alt text](https://github.com/keithonpy/ITC_DevOps_pipeline/blob/main/chart/stages.png)
 1. Version Control - maintain different version of the code
-2. Continuous integration - compile, validate, code review, unit testing, integration testing
-3. Continuous Delivery - 
+2. Continuous integration - Setup the pipeline to compile, validate, code review, unit testing, integration testing
+3. Continuous Delivery - Automate the deployment of big data applications and pipelines across environments (e.g., development, testing, production).
 4. Deployment
+5. Monitoring
 
 ## CI/CD tools - Jenkins
 ![alt text](https://github.com/keithonpy/ITC_DevOps_pipeline/blob/main/chart/Jenkins_icon.png)
